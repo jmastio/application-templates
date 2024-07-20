@@ -30,9 +30,9 @@ python etl_process.py [options]
 ```
 
 Options:
-- `--server`: Run as a Flask server.
-- `--stdin`: Extract data from stdin.
-- `--stdout`: Extract data to stdout.
+- `--server`: Run as a Flask server (default `False`).
+- `--stdin`: Extract data from stdin (default `False`).
+- `--stdout`: Extract data to stdout (default `True`).
 - `--url URL`: URL to fetch data from for extraction (default: `https://sampleapis.com/api-list/beers`).
 - `--port PORT`: Server port (default: `5000`).
 - `--output-file FILE`: Output file to load the data (default: `output.json`).

@@ -7,7 +7,7 @@ import json
 app = flask.Flask(__name__)
 
 # URL for API placeholder
-API_URL = "https://sampleapis.com/api-list/beers"
+API_URL = "https://api.sampleapis.com/beers/ale"
 # Default file for loading in the CLI
 DEFAULT_OUTPUT_FILE = 'output.json'
 
@@ -61,18 +61,18 @@ def etl_endpoint():
     """HTTP endpoint for running the ETL process."""
     req_data = flask.request.json
     url = req_data.get('url', API_URL)
-    output_file = req_data.get('output_file', DEFAULT_OUTPUT_FILE)
 
     data = extract_from_api(url)
     transformed_data = transform(data)
 
+    # load is just returning data
     return {"status": "success", "data": transformed_data}, 200
 
 
 def main():
     parser = argparse.ArgumentParser(description='Run ETL process from CLI or server')
     parser.add_argument('--server', action='store_true', help='Run as a Flask server')
-    parser.add_argument('--stdin', action='store_true', help='Extract data from stdin')
+    parser.add_argument('--stdin', action='store_true',  help='Extract data from stdin')
     parser.add_argument('--stdout', action='store_true', help='Extract data to stdout')
     parser.add_argument('--url', type=str, default=API_URL, help='URL to fetch data from for extraction')
     parser.add_argument('--port', type=str, default='5000', help='Server port')
