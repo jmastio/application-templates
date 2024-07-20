@@ -49,7 +49,7 @@ This starts the server on port 5000 by default. Change with the `--port` option.
 
 ### API Endpoint
 
-- **Endpoint**: `/etl`
+- **Endpoint**: `/`
 - **Method**: POST
 - **Content-Type**: application/json
 - **Payload example**:
@@ -117,13 +117,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
 
 ## Examples
 
 - **Run ETL process and output to stdout**:
   ```bash
   python etl_process.py --stdout
-  ```
+  ``` 
 
 - **Run ETL process from stdin**:
   ```bash

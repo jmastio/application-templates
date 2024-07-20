@@ -65,6 +65,8 @@ def load_to_stdout(data):
         logging.error(f"Error writing data to stdout: {e}")
         raise
 
+def load_to_HTTP_response(data):
+    return data
 
 def etl_process(stdin, url, output_file, stdout):
     """Run the ETL process using either stdin or URL for extraction."""
@@ -85,7 +87,7 @@ def etl_process(stdin, url, output_file, stdout):
         raise
 
 
-@app.route('/etl', methods=['POST'])
+@app.route('/', methods=['POST'])
 def etl_endpoint():
     """HTTP endpoint for running the ETL process."""
     try:
@@ -96,7 +98,7 @@ def etl_endpoint():
         transformed_data = transform(data)
 
         # load is just returning data
-        return jsonify({"status": "success", "data": transformed_data}), 200
+        return jsonify({"status": "success", "data": load_to_HTTP_response(transformed_data)}), 200
     except Exception as e:
         logging.error(f"Failed to process ETL request: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
