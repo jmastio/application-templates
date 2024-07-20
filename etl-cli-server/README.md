@@ -5,6 +5,7 @@ This application runs an ETL (Extract, Transform, Load) process either from the 
 
 ## Requirements
 - Python 3.x
+- Argparse
 - Flask
 - Requests
 
@@ -30,12 +31,12 @@ python etl_process.py [options]
 ```
 
 Options:
+- `--output-file FILE`: Output file (default: `output.json`).
+- `--port PORT`: Server port (default: `5000`).
 - `--server`: Run as a Flask server.
 - `--stdin`: Extract data from stdin.
 - `--stdout`: Extract data to stdout.
 - `--url URL`: URL to fetch data from (default: `https://sampleapis.com/api-list/beers`).
-- `--port PORT`: Server port (default: `5000`).
-- `--output-file FILE`: Output file (default: `output.json`).
 
 ### Server Mode
 

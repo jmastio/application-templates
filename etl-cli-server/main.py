@@ -1,9 +1,9 @@
 import argparse
-import requests
-import sys
 import flask
 import json
 import logging
+import requests
+import sys
 from flask import jsonify
 
 app = flask.Flask(__name__)
@@ -104,12 +104,12 @@ def etl_endpoint():
 
 def main():
     parser = argparse.ArgumentParser(description='Run ETL process from CLI or server.')
+    parser.add_argument('--output-file', type=str, default=DEFAULT_OUTPUT_FILE, help='Output file to load the data.')
+    parser.add_argument('--port', type=int, default=5000, help='Server port.')
     parser.add_argument('--server', action='store_true', help='Run as a Flask server.')
     parser.add_argument('--stdin', action='store_true', help='Extract data from stdin.')
     parser.add_argument('--stdout', action='store_true', help='Extract data to stdout.')
     parser.add_argument('--url', type=str, default=API_URL, help='URL to fetch data from for extraction.')
-    parser.add_argument('--port', type=int, default=5000, help='Server port.')
-    parser.add_argument('--output-file', type=str, default=DEFAULT_OUTPUT_FILE, help='Output file to load the data.')
 
     args = parser.parse_args()
 
