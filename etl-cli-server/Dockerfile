@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Define environment variable
-ENV FLASK_APP=etl_process.py
+ENV FLASK_APP=main.py
 ENV PYTHONUNBUFFERED=1
 
 # Run the server by default when the container starts
-CMD ["python", "etl_process.py", "--server"]
+CMD ["python", "main.py", "--server"]
