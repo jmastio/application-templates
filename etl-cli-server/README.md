@@ -98,6 +98,25 @@ docker run --rm -v $(pwd):/app etl-process python etl_process.py --stdout
 cat data.json | docker run --rm -i etl-process python etl_process.py --stdin --stdout
 ```
 
+### External Module Example
+
+If you save the above code in a file, e.g., `etl_module.py`, you can import and use the functions in another script like this:
+
+```python
+import etl_module
+
+# Example usage in another script
+def main():
+    # Example: Run ETL process from another script
+    try:
+        etl_module.etl_process(stdin=True, url=etl_module.API_URL, output_file='other_output.json', stdout=False)
+        print("ETL process completed successfully.")
+    except Exception as e:
+        print(f"ETL process failed: {e}")
+
+if __name__ == "__main__":
+    main()
+
 ## Examples
 
 - **Run ETL process and output to stdout**:
