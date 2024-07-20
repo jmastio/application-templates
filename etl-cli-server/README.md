@@ -1,11 +1,7 @@
 # ETL Process Application
 
 ## Overview
-This application allows you to run an ETL (Extract, Transform, Load) process either from the command line or as a Flask-based HTTP server. 
-
-- **Extraction** can be done from a REST API or from the standard input.
-- **Transformation** is currently a placeholder function but can be customized as needed.
-- **Load** the transformed data into a file or print to standard output.
+This application runs an ETL (Extract, Transform, Load) process either from the command line or as a Flask-based HTTP server.
 
 ## Requirements
 - Python 3.x
@@ -13,17 +9,21 @@ This application allows you to run an ETL (Extract, Transform, Load) process eit
 - Requests
 
 ## Installation
-Clone the repository and install the required packages:
-```bash
-git clone https://github.com/your-repo/etl-process.git
-cd etl-process
-pip install -r requirements.txt
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/etl-process.git
+   cd etl-process
+   ```
+2. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
 ### CLI Mode
-You can run the ETL process from the command line with various options:
+
+Run the ETL process from the command line with various options:
 
 ```bash
 python etl_process.py [options]
@@ -33,58 +33,89 @@ Options:
 - `--server`: Run as a Flask server (default `False`).
 - `--stdin`: Extract data from stdin (default `False`).
 - `--stdout`: Extract data to stdout (default `True`).
-- `--url URL`: URL to fetch data from for extraction (default: `https://sampleapis.com/api-list/beers`).
+- `--url URL`: URL to fetch data from (default: `https://sampleapis.com/api-list/beers`).
 - `--port PORT`: Server port (default: `5000`).
-- `--output-file FILE`: Output file to load the data (default: `output.json`).
+- `--output-file FILE`: Output file (default: `output.json`).
 
 ### Server Mode
-To run the ETL process as a Flask server:
+
+Run as a Flask server:
 
 ```bash
 python etl_process.py --server
 ```
-
-This will start a server on port 5000 by default, which you can change using the `--port` option.
+This starts the server on port 5000 by default. Change with the `--port` option.
 
 ### API Endpoint
-The server provides an endpoint `/etl` that accepts POST requests with a JSON payload to run the ETL process.
 
-```http
-POST /etl
-Content-Type: application/json
-
-{
+- **Endpoint**: `/etl`
+- **Method**: POST
+- **Content-Type**: application/json
+- **Payload example**:
+  ```json
+  {
     "url": "https://sampleapis.com/api-list/beers",
     "output_file": "output.json"
-}
+  }
+  ```
+- **Response example**:
+  ```json
+  {
+    "status": "success",
+    "data": [ ... ]
+  }
+  ```
+
+### Docker
+
+#### Build the Docker Image
+
+```bash
+docker build -t etl-process .
 ```
 
-Response:
+#### Run ETL Server
 
-```json
-{
-    "status": "success",
-    "data": [ ... ]  // transformed data
-}
+```bash
+docker run -p 5000:5000 etl-process
+```
+The server starts on port 5000 at `http://localhost:5000/etl`.
+
+#### Run ETL from Command Line
+
+```bash
+docker run --rm -v $(pwd):/app etl-process python etl_process.py [options]
+```
+
+Example to output to stdout:
+```bash
+docker run --rm -v $(pwd):/app etl-process python etl_process.py --stdout
+```
+
+#### Run ETL from a JSON File
+
+```bash
+cat data.json | docker run --rm -i etl-process python etl_process.py --stdin --stdout
 ```
 
 ## Examples
 
-### Run ETL process and output to stdout:
-```bash
-python etl_process.py --stdout
-```
+- **Run ETL process and output to stdout**:
+  ```bash
+  python etl_process.py --stdout
+  ```
 
-### Run ETL process from stdin:
-```bash
-cat data.json | python etl_process.py --stdin --stdout
-```
+- **Run ETL process from stdin**:
+  ```bash
+  cat data.json | python etl_process.py --stdin --stdout
+  ```
 
-### Run ETL server:
-```bash
-python etl_process.py --server
-```
-By default, this will start the server at `http://0.0.0.0:5000`.
+- **Run ETL server**:
+  ```bash
+  python etl_process.py --server
+  ```
+
+By default, the server starts at `http://0.0.0.0:5000`.
 
 ## License
 This project is licensed under the MIT License.
