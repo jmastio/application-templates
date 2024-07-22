@@ -81,7 +81,6 @@ def etl_process(stdin, url, output_file, stdout):
 def main():
     parser = argparse.ArgumentParser(description='Run ETL process from CLI.')
     parser.add_argument('--output-file', type=str, default=DEFAULT_OUTPUT_FILE, help='Output file to load the data.')
-    parser.add_argument('--port', type=int, default=5000, help='Server port.')
     parser.add_argument('--stdin', action='store_true', help='Extract data from stdin.')
     parser.add_argument('--stdout', action='store_true', help='Extract data to stdout.')
     parser.add_argument('--url', type=str, default=API_URL, help='URL to fetch data from for extraction.')
